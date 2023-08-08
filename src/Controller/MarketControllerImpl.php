@@ -12,9 +12,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 #[Route('/api/market')]
 class MarketControllerImpl extends AbstractController {
     private FacadeControllerImpl $facade;
-    private ProductService $productService;
-    private CalculateService $calculateService;
-    private ProductValidator $productValidator;
+
+    /**
+     * @param FacadeControllerImpl $facade
+     */
+    public function __construct(FacadeControllerImpl $facade) { $this->facade = $facade; }
+
 
     #[Route('/product/buy', name: 'buy_product', methods: ['POST'])]
     function buyProduct(RequestDto $dto): JsonResponse {

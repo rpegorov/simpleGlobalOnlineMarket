@@ -4,9 +4,24 @@ namespace App\Controller;
 
 use App\Controller\Dto\RequestDto;
 use App\Controller\FacadeMarketController;
+use App\Services\CalculateService;
+use App\Services\ProductService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class FacadeControllerImpl implements FacadeMarketController {
+    private ProductService $productService;
+    private CalculateService $calculateService;
+
+    /**
+     * @param ProductService $productService
+     * @param CalculateService $calculateService
+     */
+    public function __construct(ProductService $productService,
+                                CalculateService $calculateService) {
+        $this->productService = $productService;
+        $this->calculateService = $calculateService;
+    }
+
 
     function buyProduct(RequestDto $dto): JsonResponse {
         try {
