@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+ {% block title %}Hello LoginController!{% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+     {% block body %}
+         {% if error %}
+             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+         {% endif %}
+     {% endblock %}
+     <form onsubmit="onLogin(event)" action="{{ path('api_login_check') }}" method="post">>
+         <div id="bg"></div>
+         <label for="username">Email:</label>
+         <div class="form-field">
+             <input type="text" placeholder="Email" required id="username" name="_username" value="{{ last_username }}"/>
+         </div>
+         <label for="password">Password:</label>
+         <div class="form-field">
+             <input type="password" placeholder="Password" required id="password" name="_password"/>
+         </div>
+         <div class="form-field">
+             <input type="hidden" name="redirect" value="/api/doc">
+             <button class="btn" type="submit">Log in</button>
+         </div>
+     </form>
+     <script>
+       const onLogin = (event) =>{
+         event.preventDefault()
+         event.stopPropagation()
+         const data = {
+           email:document.getElementById("username")?.value,
+           password:document.getElementById("password")?.value
+         }
+         fetch("{{ path('api_login_check') }}", {
+           method: "POST", // *GET, POST, PUT, DELETE, etc.
+           headers: {
+             "Content-Type": "application/json",
+           },
+           body: JSON.stringify(data),
+         }).then((response) =>{
+           return response.json()
+         }).then((data) =>{
+           if(data.token)
+             window.location.replace('{{path('admin') }}')
+         });
+         return false
+       }
+     </script>
+ {% endblock %}

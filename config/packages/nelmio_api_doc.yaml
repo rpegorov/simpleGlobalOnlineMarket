@@ -1,0 +1,25 @@
+nelmio_api_doc:
+  documentation:
+    servers:
+      - url: http://localhost:8000/api/
+        description: API over HTTP
+      - url: https://localhost:8000/api/
+        description: API over HTTPS
+    info:
+      title: hr-crm
+      description: This hr-crm on symfony 6.2 and php 8.1
+      version: 1.0.0
+    components:
+      securitySchemes:
+        Bearer:
+          type: http
+          scheme: bearer
+          bearerFormat: JWT
+    security:
+      - Bearer: [ ]
+
+  areas:
+    path_patterns: # an array of regexps (document only routes under /api, except /api/doc)
+      - ^/api(?!/doc$)
+    host_patterns: # document only routes with a host of the form api.*
+      - ^api\.

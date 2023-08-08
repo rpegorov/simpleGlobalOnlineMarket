@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  global-market-db:
+    image: postgres:${POSTGRES_VERSION:-15}-alpine
+#    build:
+#      dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 1G
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    restart: on-failure
+    ports:
+      - "5432:5432"
+    volumes:
+      - global-market-db:/var/lib/postgresql/data:rw
+  php:
+    build:
+      dockerfile: Dockerfile
+    container_name: global-market
+
+volumes:
+  global-market-db:
