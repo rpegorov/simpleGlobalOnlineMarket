@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Controller\Dto\RequestDto;
-use App\Services\CalculateService;
-use App\Services\ProductService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
